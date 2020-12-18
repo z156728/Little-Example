@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		    <title>WebSocket测试</title>
+	</head>
+
+	<body>
+	    <p>WebSocket</p>
+	    <button type="button" onclick="testWebSocket()">测试</button>
+	
+	    <script>
+			const state = ['连接尚未建立', '连接已建立，可以进行通信', '连接正在进行关闭', '连接已经关闭或者连接不能打开'];
+			function testWebSocket() {
+				var ws = new WebSocket('ws://echo.websocket.org/echo');
+				console.log('ws连接状态：' + ws.readyState + ' --- ' + state[ws.readyState]);
+				
+				//监听是否连接成功
+				ws.onopen = function() {
+					console.log('ws连接状态：' + ws.readyState + ' --- ' + state[ws.readyState]);
+					//连接成功则发送一个数据
+					ws.send('这是一个测试数据');
+					console.log('已发送一个数据')
+				};
+				//接听服务器发回的信息并处理展示
+				ws.onmessage = function(data) {
+					console.log('接收到来自服务器的消息：');
+					console.log(data);
+					//完成通信后关闭WebSocket连接
+					ws.close();
+					console.log('正在关闭...');
+				};
+				//监听连接关闭事件
+				ws.onclose = function() {
+					//监听整个过程中websocket的状态
+					console.log('ws连接状态：' + ws.readyState + ' --- ' + state[ws.readyState]);
+				};
+				//监听并处理error事件
+				ws.onerror = function(error) {
+					console.log(error);
+				};
+				console.log("全部代码已执行完毕，WebSocket处于异步监听状态");
+			};
+		</script>
+
+	</body>
+
+</html>
