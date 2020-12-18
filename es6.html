@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>Document</title>
+		<style>
+			#sel {
+				width: 200px;
+				height: 35px;
+			}
+			.menus span{
+				display: inline-block;
+				width: 120px;
+				height: 60px;
+				background-color: #d0d0d0;
+			}
+			.menus span .actives{
+				border-bottom: 2px solid red;
+			}
+			.sames{
+				display: none;
+			}
+			.name{
+				display: block;
+			}
+		</style>
+	</head>
+
+	<body>
+		<div class="template"></div>
+		
+		<select id="sel"></select>
+		
+		<script>
+			var array1 = [
+				{id:11 , name:2},
+				{id:2 , name:3},
+				{id:3 , name:4},
+			];
+			var array2 = [
+				{id:1 , name:2},
+				{id:22 , name:33},
+				{id:33 , name:44},
+			];
+			var arr3 = array1.concat(array2);
+		// 	var map = {},dest = [];
+		// 　　for(var i = 0; i < arr3.length; i++){
+		// 　　　　var ai = arr3[i];
+		// 　　　　if(!map[ai.name]){
+		// 　　　　　　dest.push(ai);
+		// 　　　　　　map[ai.name] = ai;
+		// 　　　　}
+		// 　　};
+		　　console.log(isRepeat(arr3));
+		
+		
+			function isRepeat(arr) {
+			  var hash = {};
+			  for(var i in arr) {
+			    if(hash[arr[i].name]) {
+			      return true;
+			    }
+			    // 不存在该元素，则赋值为true，可以赋任意值，相应的修改if判断条件即可
+			    hash[arr[i].name] = true;
+			  }
+			  return false;
+			}
+		
+		</script>
+		
+		<!--引入browser解析 es6 兼容其他低版本浏览器-->
+		<script src="https://cdn.bootcss.com/jquery/2.2.1/jquery.min.js"></script>
+		<script src="browser.js"></script>
+		<script type="text/babel">
+			
+			//函数的另写法（箭头函数，但是写法局限，return好像无法省略了）
+			let addNewMessage = (a , b)=>{
+				if(a>b){
+					return a-b
+				}else{
+				 	return a+b
+				}
+			}
+			console.log(addNewMessage(10 , 20));
+			
+			
+			//简洁创建箭头函数，语句较少时，这样方便操作
+			const greet = name => `Hello ${name}!`;
+			console.log(greet('zzq'))
+			
+			let gre = (userid , username) => {
+				console.log(`${userid} + "這是第一個數"+ ${username} +"這是第二個數"`)
+			}
+			gre('12138' , 'liu')
+			
+			
+			//箭头 + Set + Array.from
+			let upion = (a , b) => Array.from(new Set([...a , ...b]))
+			console.log(upion([1,3,5,4],[1,8,6,3]) + "这是数组切割去重合并部分")
+			
+			
+			//三元运算符
+			function a(weight , height){
+				let kt = weight/(height*height);
+				return kt > 25 ? "胖" : kt < 20 ? "瘦" : 正常
+			};
+			console.log(a(120 , 185));
+			 
+			 
+			 function adqs(a=4,b=3){
+				 return a>b ? "大于" : a<b?"小于" : "等于"
+			 };
+			 console.log(adqs(3,5))
+			 
+			//模板字符串
+			let time = '2018-52-52';
+			let ages = 18;
+			
+			function makeUppercase(word) {
+				return word.toUpperCase();
+			};
+			let template = `<div>
+								<p>${makeUppercase('hello')},${ages}</p>
+								<p>${time}</p>
+							</div>`;
+			let doc = document.querySelector('.template');
+			doc.innerHTML = template;
+			
+			
+			//for of用法
+			let arr = new Set(['5','10','12','5','18','10']);
+			for(let i of arr){
+				console.log(i)
+			};
+			
+			
+			//for in用法
+			let arrs = [
+					{id:1 , name:'张三' , age:'12'},
+					{id:2 , name:'张三2' , age:'122'},
+					{id:3 , name:'张三3' , age:'123'}
+				];
+			for(let index in arrs){
+				console.log(arrs[index])
+			};
+			
+			
+			//变量解构
+			let tips = {
+				arrow: function() {
+					return '123'
+				},
+				arrows: function(index) {
+					return index
+				},
+				titles: '这事测试语句'
+			};
+			let { arrow , arrows , titles } = tips
+			
+			console.log(arrow());
+			
+			
+			//展开运算符 ...
+			const arr1 = [1,2,3];
+			const arr2 = [3,4];
+			console.log(...arr1);  //1 2 3
+			const arr3 = [...arr1 , ...arr2];
+			console.log(arr3);  //arr1和arr2的合并
+			
+			const obj1 = {
+			  a: 1,
+			  b: 2, 
+			  c: 3
+			}
+			const obj2 = {
+			  d: 4,
+			  e: 5,
+			  f: 6
+			}
+			const obj3 = {
+			    ...obj1,
+			    ...obj2
+			}
+			console.log(obj3);   //obj1和obj2两对象的结合
+			
+			//在变量解析过程中首先查找局部的作用域，然后查找上层作用域。(所以在下方中，输出在var 声明前，所以是undefined)
+			//在函数内部定义变量不带var，相当于进行变量赋值。
+			var ii = 10;
+			function asddd(){
+				var ii = 2;
+				console.log(ii);
+			};
+			asddd()
+			console.log(ii)
+			
+			
+			// 在JavaScript中，由for语句创建的变量，即使在for循环执行结束后，也依旧会存在于循环外部的执行环境中。(使用let 或const就不会)
+			for(var i = 0; i < 10; i++) {  
+			  var color = "blue";  
+			};
+			console.log(i); // 10 
+			console.log(color); // "blue"
+			
+			
+			// var 和 let const 的区别是,var 的作用于相对来说更大点
+			// let,const变量的作用域仅限于for循环,if语块,普通的块{}内部
+			// 但var 的作用于是当前整个封闭函数
+			
+			
+			// 普通函数的this指向是自身作用域内,
+			// 箭头函数,没有自身的this函数,会向外找一层,如果是普通函数包裹了个箭头函数,箭头函数使用this时,会找外部普通函数的this值,有就有,没有就没有
+			// 如果箭头函数的外层不是普通函数包裹,那this对象就指向了window
+			// 例:obj 就是个大集合体,里面的function 原始函数,照样是这个大集体的一员,所以这个function 的里面的this对应值 就可以从这个大集体里找
+			var obj = {
+			    birth: 1990,
+			    getAge: function () {
+			        var b = this.birth; // 1990
+			        var fn = () => new Date().getFullYear() - this.birth; // this指向obj对象
+			        return fn();
+			    }
+			};
+			console.log(obj.getAge());//30   2020-1990
+			
+			
+			let defaultsVal = (a=1)=>{
+				return a
+			}
+			console.log(defaultsVal(5,5))
+		</script>
+
+	</body>
+
+</html>

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<style>
+		.waterfall{
+			display: flex;
+			flex-wrap: wrap;
+		}
+	  .waterfall img {
+	    position: absolute;
+	    flex: 1;
+		margin: 10px;
+	    transition: all .4s;
+	  }
+	</style>
+</head>
+<body>
+	<div class="waterfall">
+		<img src="http://via.placeholder.com/100x100" >
+		<img src="http://via.placeholder.com/100x70" >
+		<img src="http://via.placeholder.com/100x150" >
+		<img src="http://via.placeholder.com/100x250" >
+		<img src="http://via.placeholder.com/100x80" alt="100*80">
+		<img src="http://via.placeholder.com/100x90" alt="100*90">
+		<img src="http://via.placeholder.com/100x120" alt="100*120">
+		<img src="http://via.placeholder.com/100x210" alt="100*210">
+		<img src="http://via.placeholder.com/100x230" alt="100*230">
+		<img src="http://via.placeholder.com/100x100" alt="100*100">
+		<img src="http://via.placeholder.com/100x70" alt="100*70">
+		<img src="http://via.placeholder.com/100x150" alt="100*150">
+		<img src="http://via.placeholder.com/100x250" alt="100*250">
+		<img src="http://via.placeholder.com/100x80" alt="100*80">
+		<img src="http://via.placeholder.com/100x90" alt="100*90">
+		<img src="http://via.placeholder.com/100x120" alt="100*120">
+		<img src="http://via.placeholder.com/100x210" alt="100*210">
+		<img src="http://via.placeholder.com/100x250" alt="100*250">
+		<img src="http://via.placeholder.com/100x80" alt="100*80">
+		<img src="http://via.placeholder.com/100x80" alt="100*80">
+		<img src="http://via.placeholder.com/100x90" alt="100*90">
+		<img src="http://via.placeholder.com/100x120" alt="100*120">
+		<img src="http://via.placeholder.com/100x210" alt="100*210">
+		<img src="http://via.placeholder.com/100x100" alt="100*100">
+		<img src="http://via.placeholder.com/100x70" alt="100*70">
+		<img src="http://via.placeholder.com/100x250" alt="100*250">
+		<img src="http://via.placeholder.com/100x210" alt="100*210">
+		<img src="http://via.placeholder.com/100x250" alt="100*250">
+		<img src="http://via.placeholder.com/100x210" alt="100*210">
+		<img src="http://via.placeholder.com/100x230" alt="100*230">
+		<img src="http://via.placeholder.com/100x100" alt="100*100">
+		<img src="http://via.placeholder.com/100x70" alt="100*70">
+		<img src="http://via.placeholder.com/100x150" alt="100*150">
+		<img src="http://via.placeholder.com/100x150" alt="100*150">
+		<img src="http://via.placeholder.com/100x230" alt="100*230">
+		<img src="http://via.placeholder.com/100x70" alt="100*70">
+		<img src="http://via.placeholder.com/100x150" alt="100*150">
+		<img src="http://via.placeholder.com/100x250" alt="100*250">
+		<img src="http://via.placeholder.com/100x80" alt="100*80">
+		<img src="http://via.placeholder.com/100x90" alt="100*90">
+		<img src="http://via.placeholder.com/100x120" alt="100*120">
+		<img src="http://via.placeholder.com/100x210" alt="100*210">
+		<img src="http://via.placeholder.com/100x250" alt="100*250">
+		<img src="http://via.placeholder.com/100x80" alt="100*80">
+		<img src="http://via.placeholder.com/100x80" alt="100*80">
+		<img src="http://via.placeholder.com/100x90" alt="100*90">
+		<img src="http://via.placeholder.com/100x120" alt="100*120">
+		<img src="http://via.placeholder.com/100x210" alt="100*210">
+	</div>
+	<script src="https://cdn.bootcss.com/jquery/1.12.4/jquery.js"></script>
+	<script>
+		function reset(){
+			var outWidth = $('.waterfall img').outerWidth(true);
+			var coulum = parseInt($('.waterfall').width()/outWidth);
+			var empty = [];
+			for(var i=0;i<coulum;i++){
+				empty[i] = 0;//首先定出多列的雏形
+			};
+			
+			$('.waterfall img').each(function(){
+				var minValue = empty[0];//先假定一个最小值
+				var minID = 0;//在假定最小的下标
+				for(var i=0;i<coulum;i++){
+					if(empty[i] < minValue){//如果最小值小于
+						minValue = empty[i];
+						minID = i;
+					}
+				};
+				console.log(empty)
+				//一切的操作都是为了假定出，每张图的具体定位数据
+				$(this).css({
+					left:minID * outWidth,
+					top:minValue
+				});
+				empty[minID] += $(this).outerHeight(true)
+			})
+		}
+		
+		$(window).on('load' , function(){
+			reset();
+		});
+		$(window).on('resize' , function(){
+			reset();
+		});
+		
+		reset();
+		
+		//瀑布流布局的主要思想就是定位
+		//首先，定下来容器的宽度，除去每张图的宽度，能分多少列
+		//然后，定一个空数组，里面放对象的个数就是列数，循环赋值，初始全部定义为0，因为第一行的图片，肯定top值都是0
+		//继续each遍历所有图片，为了好给每张图赋不同的定位值
+		//假定 数组 第一个值就是最小高度的值，再假定一个最小值对应的数组下标
+		//for循环列数，比较，如果最小高度 还大于for循环里的某一个值，就把这个最小高度替换掉这个值，下标也对应替换掉
+		//最后 得出的位置值，top：对应的是数组里现在最小的那个值，把这张图的top位置顶过去就是了，left：首先要知道每张图占的位置宽度，然后乘当前最小值对应的下标，谁最矮，欺负谁嘛，把谁放过去
+		
+		
+	</script>
+
+</body>
+</html>
