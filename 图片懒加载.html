@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title></title>
+	<script src="https://cdn.bootcdn.net/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+	<style>
+		img{
+			width: 50%;
+		}
+	</style>
+</head>
+<body>
+	
+	<img data-height="1" data-src="C:\Users\DL\Desktop\pixiviz\src\assets\images\landing.jpg" src="404.jpg" alt="">
+	<img data-height="2" data-src="C:\Users\DL\Desktop\pixiviz\src\assets\images\landing.jpg" src="404.jpg" alt="">
+	<img data-height="3" data-src="C:\Users\DL\Desktop\pixiviz\src\assets\images\landing.jpg" src="404.jpg" alt="">
+	<img data-height="4" data-src="C:\Users\DL\Desktop\pixiviz\src\assets\images\landing.jpg" src="404.jpg" alt="">
+	<img data-height="5" data-src="C:\Users\DL\Desktop\pixiviz\src\assets\images\landing.jpg" src="404.jpg" alt="">
+	<img data-height="6" data-src="C:\Users\DL\Desktop\pixiviz\src\assets\images\landing.jpg" src="404.jpg" alt="">
+	<img data-height="7" data-src="C:\Users\DL\Desktop\pixiviz\src\assets\images\landing.jpg" src="404.jpg" alt="">
+	<img data-height="8" data-src="C:\Users\DL\Desktop\pixiviz\src\assets\images\landing.jpg" src="404.jpg" alt="">
+	
+	<script>
+		$(window).scroll(function(){
+			var imgList = $('img');
+			var H = document.documentElement.clientHeight;//可视区域高度(就你能看到的这个容器的高度)
+			var S = document.documentElement.scrollTop || document.body.scrollTop;//滚动条高度
+			for(var i=0;i<imgList.length;i++){
+				var datai = imgList.eq(i);
+				var dataset = datai[0].dataset.src;
+				if((H + S) > datai.offset().top){
+					datai[0].src = dataset;
+				}//判断可视区域高度加滚动了多少，和这个元素距离顶部距离，
+			}
+			
+		})
+		// 这个元素距离顶部的距离是不变的,例如第三个元素,距离顶部500
+		// 可视高度也是不变的,例如这个容器现在看起来,高度300
+		// 变得只有一个滚动高度
+		// 所以判断是否加载,就加算 可视高度和滚动高度,和元素距离顶部的高度,对比
+		
+		// IntersectionObserver 交叉观察器,可判断元素是否可见,但有兼容问题,IE和safari
+	</script>
+	
+</body>
+</html>
